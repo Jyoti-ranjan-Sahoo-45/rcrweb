@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="rcrFavGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="50%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <linearGradient id="emeraldSpark" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#34d399" />
+    </linearGradient>
+  </defs>
+  <rect x="6" y="6" width="88" height="88" rx="26" fill="url(#rcrFavGrad)" />
+  <rect x="7" y="7" width="86" height="86" rx="25" stroke="white" stroke-opacity="0.35" stroke-width="2" />
+  <path d="M32 26 V74 M32 26 H56 C64 26 70 32 70 40 C70 48 64 54 56 54 H32 M50 54 L68 74" stroke="white" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="70" cy="28" r="7" fill="url(#emeraldSpark)" />
+  <path d="M70 23 L71.5 26.5 L75 28 L71.5 29.5 L70 33 L68.5 29.5 L65 28 L68.5 26.5 Z" fill="white" />
+</svg>

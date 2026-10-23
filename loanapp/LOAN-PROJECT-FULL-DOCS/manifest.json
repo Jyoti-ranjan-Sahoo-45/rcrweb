@@ -1,0 +1,10 @@
+{
+  "name": "Digital Loan Management Platform",
+  "customer_frontend": "React mobile-first",
+  "admin_frontend": "React web",
+  "backend": "Laravel",
+  "android": "Native Android shell hosting customer React app",
+  "docs_markdown_count": 48,
+  "start_file": "docs/00-MASTER-INSTRUCTIONS.md",
+  "build_prompt": "docs/44-ANTIGRAVITY-BUILD-PROMPT.md"
+}
