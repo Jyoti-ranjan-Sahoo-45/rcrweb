@@ -46,6 +46,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Customer dashboard & applications
     Route::get('/customer/dashboard', [DashboardController::class, 'customerDashboard']);
+    Route::get('/customer/loan-eligibility', [LoanApplicationController::class, 'checkEligibility']);
     Route::get('/applications', [LoanApplicationController::class, 'index']);
     Route::get('/applications/active-draft', [LoanApplicationController::class, 'activeDraft']);
     Route::get('/applications/{id}', [LoanApplicationController::class, 'show']);

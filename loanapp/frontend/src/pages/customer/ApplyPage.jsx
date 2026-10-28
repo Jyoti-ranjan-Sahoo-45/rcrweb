@@ -26,6 +26,7 @@ export const ApplyPage = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [detectedDraft, setDetectedDraft] = useState(null);
   const [showDraftModal, setShowDraftModal] = useState(false);
+  const [eligibility, setEligibility] = useState(null);
 
   // 4. Loan Requirement
   const [requestedAmount, setRequestedAmount] = useState(100000);
@@ -196,6 +197,20 @@ export const ApplyPage = () => {
   useEffect(() => {
     const init = async () => {
       try {
+        // 1. Check user loan eligibility: Strict single active loan / single application rule
+        try {
+          const eligRes = await api.get('/customer/loan-eligibility');
+          const elig = eligRes.data;
+          setEligibility(elig);
+
+          if (elig && elig.can_apply === false) {
+            setLoading(false);
+            return;
+          }
+        } catch (err) {
+          console.warn('Loan eligibility check error', err);
+        }
+
         const prodRes = await api.get('/products');
         const found = prodRes.data?.data?.find((p) => p.id === Number(productId));
         if (found) {
@@ -375,6 +390,98 @@ export const ApplyPage = () => {
       <div className="h-64 flex flex-col items-center justify-center gap-3 text-xs text-slate-400">
         <div className="w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
         <span>Loading loan application...</span>
+      </div>
+    );
+  }
+
+  // BLOCKED STATE: User already has an active disbursed loan or pending application in progress
+  if (eligibility && eligibility.can_apply === false) {
+    const activeApp = eligibility.active_application;
+    const isDisbursed = eligibility.reason === 'active_disbursed' || activeApp?.current_status === 'disbursed';
+
+    return (
+      <div className="max-w-lg mx-auto py-6 space-y-5 animate-in fade-in duration-300">
+        <button 
+          onClick={() => navigate('/app')} 
+          className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 transition"
+        >
+          <ArrowLeft size={16} />
+          <span>Back to Home</span>
+        </button>
+
+        <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100 text-center space-y-6">
+          <div className={`w-16 h-16 rounded-3xl flex items-center justify-center mx-auto shadow-inner ${
+            isDisbursed ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-blue-50 text-blue-600 border border-blue-100'
+          }`}>
+            {isDisbursed ? <ShieldCheck size={36} /> : <Clock size={36} />}
+          </div>
+
+          <div className="space-y-2">
+            <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider ${
+              isDisbursed 
+                ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' 
+                : 'bg-amber-50 text-amber-700 border border-amber-200'
+            }`}>
+              {isDisbursed ? 'Active Disbursed Loan' : 'Application In Progress'}
+            </span>
+            <h2 className="text-xl font-extrabold text-slate-900 tracking-tight">
+              {isDisbursed ? 'Active Loan Already Running' : 'Application Currently Under Review'}
+            </h2>
+            <p className="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">
+              {eligibility.message}
+            </p>
+          </div>
+
+          {activeApp && (
+            <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 text-left space-y-2 text-xs">
+              <div className="flex justify-between items-center py-1 border-b border-slate-200/60">
+                <span className="text-slate-500">Application Number</span>
+                <span className="font-mono font-bold text-slate-800">{activeApp.application_number}</span>
+              </div>
+              <div className="flex justify-between items-center py-1 border-b border-slate-200/60">
+                <span className="text-slate-500">Loan Facility</span>
+                <span className="font-semibold text-slate-800">{activeApp.product?.name || activeApp.product?.title || 'Personal Loan'}</span>
+              </div>
+              <div className="flex justify-between items-center py-1 border-b border-slate-200/60">
+                <span className="text-slate-500">Loan Amount</span>
+                <span className="font-bold text-slate-900">₹{Number(activeApp.approved_amount || activeApp.requested_amount || 0).toLocaleString('en-IN')}</span>
+              </div>
+              <div className="flex justify-between items-center py-1">
+                <span className="text-slate-500">Current Status</span>
+                <span className="font-bold text-blue-600 capitalize">
+                  {isDisbursed ? 'Disbursed (In Repayment)' : (activeApp.current_status || 'Under Review').replace(/_/g, ' ')}
+                </span>
+              </div>
+            </div>
+          )}
+
+          <div className="p-3.5 bg-blue-50/60 border border-blue-100 rounded-2xl text-[11px] text-blue-800 text-left space-y-1">
+            <div className="font-semibold flex items-center gap-1.5">
+              <Sparkles size={14} className="text-blue-600 shrink-0" />
+              <span>RCR Single-Loan Credit Policy</span>
+            </div>
+            <p className="text-slate-600 leading-relaxed text-[11px]">
+              To safeguard financial health and comply with digital lending guidelines, RCR Finance sanctions one loan at a time. Once this application or loan cycle is closed, you can apply for higher limits immediately.
+            </p>
+          </div>
+
+          <div className="pt-2 space-y-2.5">
+            <button
+              onClick={() => navigate(eligibility.action_url || `/applications/${activeApp?.id}`)}
+              className="w-full py-3.5 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl font-bold text-xs shadow-lg shadow-blue-500/25 hover:shadow-xl hover:from-blue-700 hover:to-indigo-700 transition flex items-center justify-center gap-2"
+            >
+              <span>{eligibility.button_text || (isDisbursed ? 'Manage Active Loan & Repay' : 'Track Existing Application')}</span>
+              <ChevronRight size={16} />
+            </button>
+
+            <button
+              onClick={() => navigate('/app')}
+              className="w-full py-3 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl font-semibold text-xs transition"
+            >
+              Return to Dashboard
+            </button>
+          </div>
+        </div>
       </div>
     );
   }

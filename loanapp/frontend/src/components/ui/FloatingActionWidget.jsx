@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Zap, ArrowRight, X, MessageSquare } from 'lucide-react';
+import { Zap, ArrowRight, X } from 'lucide-react';
 
 export const FloatingActionWidget = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -43,18 +43,6 @@ export const FloatingActionWidget = () => {
           </button>
         </div>
       )}
-
-      {/* Floating WhatsApp Action Button */}
-      <a
-        href="https://wa.me/919588746801?text=Hello%20RCR%20Finance%2C%20I%20want%20to%20apply%20for%20a%20loan."
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group relative flex items-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white px-4 py-2.5 rounded-full shadow-xl shadow-emerald-600/30 hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer font-bold text-xs sm:text-sm"
-        title="Chat on WhatsApp"
-      >
-        <MessageSquare size={16} className="fill-current" />
-        <span>Chat on WhatsApp</span>
-      </a>
 
       {/* Floating Apply Now Button */}
       <Link

@@ -34,6 +34,7 @@ remote_dirs = [
 
 print('1. Uploading backend files (controllers, services, config)...', flush=True)
 backend_files = [
+    (r'c:\jyoti\rcrweb\loanapp\backend\app\Enums\LoanStatus.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Enums/LoanStatus.php'),
     (r'c:\jyoti\rcrweb\loanapp\backend\app\Models\User.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Models/User.php'),
     (r'c:\jyoti\rcrweb\loanapp\backend\app\Models\LoanApplication.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Models/LoanApplication.php'),
     (r'c:\jyoti\rcrweb\loanapp\backend\app\Http\Controllers\DashboardController.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Http/Controllers/DashboardController.php'),
@@ -50,6 +51,7 @@ backend_files = [
     (r'c:\jyoti\rcrweb\pay-desk.php', '/home/u529002218/domains/rcrgroups.shop/public_html/pay-desk.php'),
     (r'c:\jyoti\rcrweb\pay-desk.php', '/home/u529002218/domains/rcrfinance.com/public_html/pay-desk.php'),
     (r'c:\jyoti\rcrweb\index.html', '/home/u529002218/domains/rcrgroups.shop/public_html/index.html'),
+    (r'c:\jyoti\rcrweb\contact.html', '/home/u529002218/domains/rcrgroups.shop/public_html/contact.html'),
 ]
 
 for lpath, rpath in backend_files:

@@ -80,4 +80,48 @@ enum LoanStatus: string
             self::REJECTED, self::OFFER_EXPIRED, self::CANCELLED, self::CLOSED => [],
         };
     }
+
+    public function isTerminal(): bool
+    {
+        return in_array($this, [
+            self::CLOSED,
+            self::REJECTED,
+            self::CANCELLED,
+            self::OFFER_DECLINED,
+            self::OFFER_EXPIRED,
+        ]);
+    }
+
+    public function isPendingReview(): bool
+    {
+        return in_array($this, self::pendingStatuses());
+    }
+
+    public function isActiveDisbursedLoan(): bool
+    {
+        return $this === self::DISBURSED;
+    }
+
+    public static function pendingStatuses(): array
+    {
+        return [
+            self::SUBMITTED,
+            self::INITIAL_REVIEW,
+            self::DOCUMENTS_PENDING,
+            self::DOCUMENT_VERIFICATION,
+            self::ADDITIONAL_INFO_REQUIRED,
+            self::ELIGIBILITY_REVIEW,
+            self::CREDIT_ASSESSMENT,
+            self::APPROVAL_PENDING,
+            self::APPROVED,
+            self::OFFER_PREPARATION,
+            self::OFFER_SENT,
+            self::OFFER_ACCEPTED,
+            self::AGREEMENT_PENDING,
+            self::PAYMENT_PENDING,
+            self::PAYMENT_VERIFICATION,
+            self::READY_FOR_DISBURSEMENT,
+            self::DISBURSEMENT_PROCESSING,
+        ];
+    }
 }

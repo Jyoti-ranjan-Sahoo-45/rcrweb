@@ -194,6 +194,7 @@ export const LandingPage = () => {
               <span>Android App</span>
             </a>
             <a href="#faq" className="hover:text-blue-400 transition-colors">FAQ</a>
+            <Link to="/contact-us" className="hover:text-blue-400 transition-colors">Contact Us</Link>
           </nav>
 
           {/* Header Action Buttons */}
@@ -241,7 +242,8 @@ export const LandingPage = () => {
                 <Smartphone size={16} />
                 <span>Download Android App</span>
               </a>
-              <a href="#faq" onClick={() => setMobileMenuOpen(false)} className="py-2">FAQ</a>
+              <a href="#faq" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-slate-800/60">FAQ</a>
+              <Link to="/contact-us" onClick={() => setMobileMenuOpen(false)} className="py-2 text-blue-400 font-semibold">Contact Us</Link>
             </div>
             <div className="pt-4 flex flex-col gap-2.5 border-t border-slate-800">
               <Link
@@ -914,6 +916,7 @@ export const LandingPage = () => {
                 <li><a href="/rcr_finance.apk" download="rcr_finance.apk" className="hover:text-emerald-400 transition font-bold">Download Android APK</a></li>
                 <li><Link to="/delete-account" className="hover:text-rose-400 transition">Delete Account & Data</Link></li>
                 <li><Link to="/grievance" className="hover:text-amber-400 transition">Grievance Redressal</Link></li>
+                <li><Link to="/contact-us" className="hover:text-emerald-400 transition font-bold">Contact Us & Support</Link></li>
                 <li><Link to="/admin/login" className="hover:text-slate-400 transition">Admin / Staff Desk</Link></li>
               </ul>
             </div>
@@ -944,6 +947,7 @@ export const LandingPage = () => {
                 <Link to="/terms" className="hover:underline text-slate-400 hover:text-white">Terms of Service</Link>
                 <Link to="/delete-account" className="hover:underline text-slate-400 hover:text-white">Account Deletion</Link>
                 <Link to="/grievance" className="hover:underline text-slate-400 hover:text-white">Grievance Redressal</Link>
+                <Link to="/contact-us" className="hover:underline text-slate-400 hover:text-white">Contact Us</Link>
               </div>
             </div>
           </div>

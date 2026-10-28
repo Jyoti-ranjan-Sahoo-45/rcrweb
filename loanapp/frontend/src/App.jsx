@@ -11,6 +11,7 @@ import { PrivacyPolicyPage } from './pages/public/PrivacyPolicyPage';
 import { TermsConditionsPage } from './pages/public/TermsConditionsPage';
 import { AccountDeletionPage } from './pages/public/AccountDeletionPage';
 import { GrievancePage } from './pages/public/GrievancePage';
+import { ContactUsPage } from './pages/public/ContactUsPage';
 
 // Layouts
 import { CustomerLayout } from './layouts/CustomerLayout';
@@ -123,6 +124,9 @@ export default function App() {
             <Route path="/delete-account" element={<AccountDeletionPage />} />
             <Route path="/account-deletion" element={<Navigate to="/delete-account" replace />} />
             <Route path="/grievance" element={<GrievancePage />} />
+            <Route path="/contact-us" element={<ContactUsPage />} />
+            <Route path="/contact" element={<Navigate to="/contact-us" replace />} />
+            <Route path="/contactus" element={<Navigate to="/contact-us" replace />} />
 
             {/* Customer Routes (Mobile & Web In-App Layout) */}
             <Route element={<CustomerLayout />}>

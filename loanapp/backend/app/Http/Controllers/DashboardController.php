@@ -23,7 +23,11 @@ class DashboardController extends Controller
             ->get();
 
 
-        $activeApplication = $applications->firstWhere('current_status', '!=', LoanStatus::CLOSED);
+        $activeApplication = $applications->first(fn($a) => !$a->current_status->isTerminal());
+        $hasActiveLoanOrPending = $applications->contains(function ($a) {
+            return $a->current_status === LoanStatus::DISBURSED || $a->current_status->isPendingReview();
+        });
+        $canApplyNewLoan = !$hasActiveLoanOrPending;
 
         $nextAction = null;
         if ($activeApplication) {
@@ -149,6 +153,8 @@ class DashboardController extends Controller
         return response()->json([
             'success' => true,
             'user' => $user,
+            'can_apply_new_loan' => $canApplyNewLoan,
+            'has_active_loan_or_pending' => $hasActiveLoanOrPending,
             'active_application' => $activeApplication,
             'active_loan_repayment' => $activeLoanRepayment,
             'all_applications' => $applications,

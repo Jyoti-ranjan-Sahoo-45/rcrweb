@@ -127,6 +127,88 @@ class LoanApplicationController extends Controller
 
     /**
      * Get the active incomplete draft application for the logged-in user
+    /**
+     * Check if the authenticated customer is eligible to apply for a new loan.
+     * Enforces policy: No duplicate applications if pending review or active disbursed loan exists.
+     */
+    public function checkEligibility(Request $request): JsonResponse
+    {
+        $user = $request->user();
+
+        // 1. Check for Active Disbursed Loan (Repayment stage)
+        $activeDisbursed = LoanApplication::where('user_id', $user->id)
+            ->where('current_status', LoanStatus::DISBURSED)
+            ->with(['product'])
+            ->latest('id')
+            ->first();
+
+        if ($activeDisbursed) {
+            return response()->json([
+                'success' => true,
+                'can_apply' => false,
+                'code' => 'ACTIVE_LOAN_EXISTS',
+                'reason' => 'active_disbursed',
+                'message' => "You currently have an active disbursed loan (#{$activeDisbursed->application_number}). As per credit policy, you cannot apply for a new loan until your current loan is fully repaid and closed.",
+                'active_application' => $activeDisbursed,
+                'action_url' => "/applications/{$activeDisbursed->id}/repay",
+                'button_text' => 'Manage Active Loan & Repay',
+            ]);
+        }
+
+        // 2. Check for Pending Application Under Review
+        $pendingApp = LoanApplication::where('user_id', $user->id)
+            ->whereIn('current_status', LoanStatus::pendingStatuses())
+            ->with(['product'])
+            ->latest('id')
+            ->first();
+
+        if ($pendingApp) {
+            return response()->json([
+                'success' => true,
+                'can_apply' => false,
+                'code' => 'PENDING_APPLICATION_EXISTS',
+                'reason' => 'pending_application',
+                'message' => "You already have a loan application in progress (#{$pendingApp->application_number} - {$pendingApp->current_status->customerLabel()}). Please track your existing application instead of applying again.",
+                'active_application' => $pendingApp,
+                'action_url' => "/applications/{$pendingApp->id}",
+                'button_text' => 'Track Existing Application',
+            ]);
+        }
+
+        // 3. Check for Incomplete Draft
+        $draft = LoanApplication::where('user_id', $user->id)
+            ->where('current_status', LoanStatus::DRAFT)
+            ->with(['product'])
+            ->latest('id')
+            ->first();
+
+        if ($draft) {
+            return response()->json([
+                'success' => true,
+                'can_apply' => true,
+                'has_draft' => true,
+                'code' => 'DRAFT_EXISTS',
+                'reason' => 'draft_exists',
+                'message' => "You have an unfinished draft application (#{$draft->application_number}).",
+                'draft_application' => $draft,
+                'action_url' => "/apply/{$draft->product_id}?draft={$draft->id}&step=" . ($draft->current_step ?: 1),
+                'button_text' => 'Resume Draft',
+            ]);
+        }
+
+        // 4. Eligible to apply
+        return response()->json([
+            'success' => true,
+            'can_apply' => true,
+            'has_draft' => false,
+            'code' => 'ELIGIBLE',
+            'reason' => 'eligible',
+            'message' => 'You are eligible to apply for a loan.',
+        ]);
+    }
+
+    /**
+     * Get active draft application for the authenticated customer
      */
     public function activeDraft(Request $request): JsonResponse
     {
@@ -271,20 +353,54 @@ class LoanApplicationController extends Controller
 
                 $application->update($updateData);
             } else {
-                $applicationNumber = 'APP-' . date('Ymd') . '-' . strtoupper(Str::random(6));
+                // Rule: Cannot create a new loan application if an active disbursed loan or pending application exists
+                $activeDisbursed = LoanApplication::where('user_id', $user->id)
+                    ->where('current_status', LoanStatus::DISBURSED)
+                    ->first();
+                if ($activeDisbursed) {
+                    abort(422, "You cannot apply for a new loan because you currently have an active disbursed loan (#{$activeDisbursed->application_number}). Please repay and close your current loan first.");
+                }
 
-                $application = LoanApplication::create([
-                    'application_number' => $applicationNumber,
-                    'user_id' => $user->id,
-                    'product_id' => $validated['product_id'],
-                    'requested_amount' => $validated['requested_amount'],
-                    'requested_tenure_months' => $validated['requested_tenure_months'],
-                    'purpose' => $validated['purpose'] ?? null,
-                    'current_status' => LoanStatus::DRAFT,
-                    'current_step' => $validated['current_step'] ?? 1,
-                    'ip_address' => $request->ip(),
-                    'user_agent' => $request->userAgent(),
-                ]);
+                $pendingApp = LoanApplication::where('user_id', $user->id)
+                    ->whereIn('current_status', LoanStatus::pendingStatuses())
+                    ->first();
+                if ($pendingApp) {
+                    abort(422, "You cannot apply for a new loan because you already have an application in progress (#{$pendingApp->application_number}). Please track your existing application.");
+                }
+
+                // If user already has an unfinished draft, update and reuse it instead of creating a second draft
+                $existingDraft = LoanApplication::where('user_id', $user->id)
+                    ->where('current_status', LoanStatus::DRAFT)
+                    ->first();
+
+                if ($existingDraft) {
+                    $application = $existingDraft;
+                    $updateData = [
+                        'product_id' => $validated['product_id'],
+                        'requested_amount' => $validated['requested_amount'],
+                        'requested_tenure_months' => $validated['requested_tenure_months'],
+                        'purpose' => $validated['purpose'] ?? null,
+                    ];
+                    if (!empty($validated['current_step'])) {
+                        $updateData['current_step'] = $validated['current_step'];
+                    }
+                    $application->update($updateData);
+                } else {
+                    $applicationNumber = 'APP-' . date('Ymd') . '-' . strtoupper(Str::random(6));
+
+                    $application = LoanApplication::create([
+                        'application_number' => $applicationNumber,
+                        'user_id' => $user->id,
+                        'product_id' => $validated['product_id'],
+                        'requested_amount' => $validated['requested_amount'],
+                        'requested_tenure_months' => $validated['requested_tenure_months'],
+                        'purpose' => $validated['purpose'] ?? null,
+                        'current_status' => LoanStatus::DRAFT,
+                        'current_step' => $validated['current_step'] ?? 1,
+                        'ip_address' => $request->ip(),
+                        'user_agent' => $request->userAgent(),
+                    ]);
+                }
             }
 
             if (!empty($validated['personal'])) {
@@ -359,6 +475,27 @@ class LoanApplicationController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Application is already submitted or in progress.',
+            ], 422);
+        }
+
+        // Rule: Cannot submit if user already has an active disbursed loan or another application in progress
+        $otherActiveLoan = LoanApplication::where('user_id', $request->user()->id)
+            ->where('id', '!=', $id)
+            ->where(function ($q) {
+                $q->where('current_status', LoanStatus::DISBURSED)
+                  ->orWhereIn('current_status', LoanStatus::pendingStatuses());
+            })
+            ->first();
+
+        if ($otherActiveLoan) {
+            $isDisbursed = $otherActiveLoan->current_status === LoanStatus::DISBURSED;
+            $msg = $isDisbursed
+                ? "Cannot submit: You currently have an active disbursed loan (#{$otherActiveLoan->application_number}). Please repay and close your active loan first."
+                : "Cannot submit: You already have another loan application in progress (#{$otherActiveLoan->application_number}).";
+            return response()->json([
+                'success' => false,
+                'code' => $isDisbursed ? 'ACTIVE_LOAN_EXISTS' : 'PENDING_APPLICATION_EXISTS',
+                'message' => $msg,
             ], 422);
         }
 

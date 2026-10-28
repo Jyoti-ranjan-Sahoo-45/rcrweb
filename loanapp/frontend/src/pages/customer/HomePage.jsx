@@ -352,9 +352,17 @@ export const HomePage = () => {
                           </button>
                           <button
                             onClick={() => navigate(user ? `/apply/${prod.id}` : `/login?redirect=/apply/${prod.id}`)}
-                            className="flex-1 py-2.5 text-center text-xs font-bold text-white btn-gradient rounded-xl shadow-md shadow-blue-500/20 transition flex items-center justify-center gap-1.5"
+                            className={`flex-1 py-2.5 text-center text-xs font-bold rounded-xl shadow-md transition flex items-center justify-center gap-1.5 ${
+                              user && dashboardData?.can_apply_new_loan === false
+                                ? 'bg-slate-800 text-white hover:bg-slate-900 shadow-slate-900/10'
+                                : 'text-white btn-gradient shadow-blue-500/20'
+                            }`}
                           >
-                            <span>Apply Now</span>
+                            <span>
+                              {user && dashboardData?.can_apply_new_loan === false
+                                ? (dashboardData.active_loan_repayment ? 'Active Loan' : 'In Review')
+                                : 'Apply Now'}
+                            </span>
                             <ChevronRight size={14} />
                           </button>
                         </div>

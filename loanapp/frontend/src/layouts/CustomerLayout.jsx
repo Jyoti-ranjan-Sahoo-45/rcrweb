@@ -2,7 +2,6 @@ import React from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { BrandLogo } from '../components/BrandLogo';
-import { NeedHelpWidget } from '../components/NeedHelpWidget';
 import { Home, FileText, User, LogOut } from 'lucide-react';
 
 export const CustomerLayout = () => {
@@ -97,9 +96,6 @@ export const CustomerLayout = () => {
             );
           })}
         </nav>
-
-        {/* Floating Need Help Action Widget */}
-        <NeedHelpWidget />
       </div>
     </div>
   );
