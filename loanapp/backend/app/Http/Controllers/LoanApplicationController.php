@@ -14,6 +14,7 @@ use App\Models\LoanProduct;
 use App\Services\AuditService;
 use App\Services\EligibilityEngine;
 use App\Services\LoanStateMachine;
+use App\Services\MetaCapiService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -393,6 +394,18 @@ class LoanApplicationController extends Controller
 
         $application->update(['submitted_at' => now()]);
         $stateMachine->transition($application, LoanStatus::SUBMITTED, 'Submitted by customer', $request->user()->id);
+
+        $applicantUser = $request->user();
+        MetaCapiService::sendEvent('Lead', [
+            'email' => $applicantUser?->email,
+            'phone' => $applicantUser?->phone,
+            'first_name' => $application->personalDetails?->first_name ?? explode(' ', $applicantUser?->name ?? '')[0] ?? '',
+            'last_name' => $application->personalDetails?->last_name ?? '',
+        ], [
+            'content_name' => $application->product?->title ?? 'Loan Application',
+            'value' => (float)($application->requested_amount ?? 10000),
+            'currency' => 'INR',
+        ]);
 
         return response()->json([
             'success' => true,

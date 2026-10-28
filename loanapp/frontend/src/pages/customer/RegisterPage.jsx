@@ -3,6 +3,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { BrandLogo } from '../../components/BrandLogo';
 import { Lock, Mail, User, Phone, ArrowRight, AlertCircle } from 'lucide-react';
+import { trackMetaEvent } from '../../utils/metaPixel';
 
 export const RegisterPage = () => {
   const [searchParams] = useSearchParams();
@@ -26,6 +27,10 @@ export const RegisterPage = () => {
     try {
       sessionStorage.removeItem('rcr_draft_prompt_dismissed');
       await register(form);
+      trackMetaEvent('CompleteRegistration', {
+        content_name: 'Customer Registration',
+        status: 'completed'
+      });
       navigate(redirect);
     } catch (e) {
       setErrorMsg(e.response?.data?.message || 'Registration failed. Please check inputs.');

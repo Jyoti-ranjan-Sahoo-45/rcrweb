@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'meta' => [
+        'pixel_id' => env('META_PIXEL_ID', '1792100208524597'),
+        'capi_token' => env('META_CAPI_ACCESS_TOKEN'),
+    ],
+
 ];

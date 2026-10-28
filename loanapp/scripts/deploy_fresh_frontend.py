@@ -32,7 +32,7 @@ remote_dirs = [
     '/home/u529002218/domains/antiquewhite-fish-888897.hostingersite.com/public_html',
 ]
 
-print('1. Uploading backend files (controllers, routes)...', flush=True)
+print('1. Uploading backend files (controllers, services, config)...', flush=True)
 backend_files = [
     (r'c:\jyoti\rcrweb\loanapp\backend\app\Models\User.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Models/User.php'),
     (r'c:\jyoti\rcrweb\loanapp\backend\app\Models\LoanApplication.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Models/LoanApplication.php'),
@@ -42,16 +42,36 @@ backend_files = [
     (r'c:\jyoti\rcrweb\loanapp\backend\app\Http\Controllers\StaffOperationsController.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Http/Controllers/StaffOperationsController.php'),
     (r'c:\jyoti\rcrweb\loanapp\backend\app\Http\Controllers\LoanApplicationController.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Http/Controllers/LoanApplicationController.php'),
     (r'c:\jyoti\rcrweb\loanapp\backend\app\Http\Controllers\AuthController.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Http/Controllers/AuthController.php'),
+    (r'c:\jyoti\rcrweb\loanapp\backend\app\Http\Controllers\PaymentController.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Http/Controllers/PaymentController.php'),
+    (r'c:\jyoti\rcrweb\loanapp\backend\app\Services\MetaCapiService.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Services/MetaCapiService.php'),
+    (r'c:\jyoti\rcrweb\loanapp\backend\config\services.php', '/home/u529002218/domains/rcrfinance.com/backend/config/services.php'),
     (r'c:\jyoti\rcrweb\loanapp\backend\bootstrap\app.php', '/home/u529002218/domains/rcrfinance.com/backend/bootstrap/app.php'),
     (r'c:\jyoti\rcrweb\loanapp\backend\routes\api.php', '/home/u529002218/domains/rcrfinance.com/backend/routes/api.php'),
     (r'c:\jyoti\rcrweb\pay-desk.php', '/home/u529002218/domains/rcrgroups.shop/public_html/pay-desk.php'),
     (r'c:\jyoti\rcrweb\pay-desk.php', '/home/u529002218/domains/rcrfinance.com/public_html/pay-desk.php'),
+    (r'c:\jyoti\rcrweb\index.html', '/home/u529002218/domains/rcrgroups.shop/public_html/index.html'),
 ]
 
 for lpath, rpath in backend_files:
     if os.path.exists(lpath):
         sftp.put(lpath, rpath)
         print(f'Uploaded backend file -> {rpath}', flush=True)
+
+# Ensure remote .env has META credentials
+remote_env_path = '/home/u529002218/domains/rcrfinance.com/backend/.env'
+try:
+    with sftp.open(remote_env_path, 'r') as f:
+        env_content = f.read().decode('utf-8')
+    
+    if 'META_PIXEL_ID' not in env_content:
+        meta_env_snippet = '\n\nMETA_PIXEL_ID=1792100208524597\nMETA_CAPI_ACCESS_TOKEN="EAAcblU50CjIBSZBUbeDCKQCVZAZAAQQcTMJ8ZAuk2cBqCkrt62XKuSbT5UtTOiSZBGNTjrUvje6LiBmRgpu59zmZBZAf2sY4c10ZAKaQKgwtHnShWM7vSs3RZAXgCJ6Y991Cl7KXH00MXQob8NBgqQetZCJ4CTh2Ht7XlNqEhxclzTZBEbvMkPoZCxgUlGZCTPoiKYk09ywZDZD"\n'
+        with sftp.open(remote_env_path, 'a') as f:
+            f.write(meta_env_snippet.encode('utf-8'))
+        print('Appended META_PIXEL_ID and META_CAPI_ACCESS_TOKEN to remote .env', flush=True)
+    else:
+        print('Remote .env already contains META_PIXEL_ID.', flush=True)
+except Exception as e:
+    print(f'Warning reading/updating remote .env: {e}', flush=True)
 
 print('2. Uploading new assets to remote targets...', flush=True)
 for rdir in remote_dirs:

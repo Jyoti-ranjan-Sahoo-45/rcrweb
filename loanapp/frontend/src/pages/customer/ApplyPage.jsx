@@ -9,6 +9,7 @@ import {
   RotateCcw, Clock
 } from 'lucide-react';
 import { DraftResumeModal } from '../../components/DraftResumeModal';
+import { trackMetaEvent } from '../../utils/metaPixel';
 
 export const ApplyPage = () => {
   const { productId } = useParams();
@@ -356,6 +357,11 @@ export const ApplyPage = () => {
 
       // Submit application
       await api.post(`/applications/${applicationId}/submit`);
+      trackMetaEvent('Lead', {
+        content_name: product?.title || 'Loan Application',
+        value: Number(requestedAmount) || 10000,
+        currency: 'INR'
+      });
       navigate(`/applications/${applicationId}`);
     } catch (e) {
       setErrorMsg(e.response?.data?.message || 'Submission failed. Please verify mandatory details.');

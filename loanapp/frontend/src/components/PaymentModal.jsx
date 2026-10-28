@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Lock, ShieldCheck, RefreshCw, ExternalLink } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { trackMetaEvent } from '../utils/metaPixel';
 
 export const PaymentModal = ({
   isOpen,
@@ -25,6 +26,14 @@ export const PaymentModal = ({
         } catch (e) {
           // ignore if canvas-confetti fails
         }
+
+        // Track Meta Pixel Purchase event
+        trackMetaEvent('Purchase', {
+          content_name: title || 'Fee Payment',
+          currency: 'INR',
+          value: Number(event.data?.amount) || 353
+        });
+
         if (typeof onSuccess === 'function') {
           onSuccess(event.data);
         }
@@ -33,14 +42,19 @@ export const PaymentModal = ({
 
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, [onSuccess]);
+  }, [onSuccess, title]);
 
-  // Reset loading state when url changes or modal opens
+  // Reset loading state and track InitiateCheckout when modal opens
   useEffect(() => {
     if (isOpen) {
       setIframeLoading(true);
       // Disable background scrolling
       document.body.style.overflow = 'hidden';
+
+      // Track Meta Pixel InitiateCheckout event
+      trackMetaEvent('InitiateCheckout', {
+        content_name: title || 'Loan Stamping / Verification'
+      });
     } else {
       document.body.style.overflow = 'unset';
     }

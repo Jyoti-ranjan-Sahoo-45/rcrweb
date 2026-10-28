@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { SplashScreen } from './components/SplashScreen';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { MetaPixelTracker } from './components/MetaPixelTracker';
 
 // Public Pages & Play Store Compliance
 import { LandingPage } from './pages/public/LandingPage';
@@ -111,6 +112,7 @@ export default function App() {
       <AuthProvider>
         {showSplash && <SplashScreen onFinish={handleSplashFinish} />}
         <BrowserRouter>
+          <MetaPixelTracker />
           <Routes>
             {/* Public Root & Policy Routes */}
             <Route path="/" element={<RootRoute />} />

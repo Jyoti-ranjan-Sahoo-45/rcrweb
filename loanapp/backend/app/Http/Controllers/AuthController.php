@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\UserRole;
 use App\Models\User;
 use App\Services\AuditService;
+use App\Services\MetaCapiService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -38,6 +39,15 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         AuditService::log('customer_registered', 'User', $user->id, null, ['email' => $user->email], $user->id);
+
+        MetaCapiService::sendEvent('CompleteRegistration', [
+            'email' => $user->email,
+            'phone' => $user->phone,
+            'first_name' => explode(' ', $user->name)[0] ?? '',
+        ], [
+            'status' => 'completed',
+            'content_name' => 'Customer Registration',
+        ]);
 
         return response()->json([
             'success' => true,

@@ -8,6 +8,7 @@ use App\Models\LoanApplication;
 use App\Models\PaymentRecord;
 use App\Services\AuditService;
 use App\Services\LoanStateMachine;
+use App\Services\MetaCapiService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -205,6 +206,16 @@ class PaymentController extends Controller
         ]);
 
         $stateMachine->transition($application, LoanStatus::READY_FOR_DISBURSEMENT, 'Processing fee paid and verified', $user->id);
+
+        MetaCapiService::sendEvent('Purchase', [
+            'email' => $user->email,
+            'phone' => $user->phone,
+            'first_name' => explode(' ', $user->name)[0] ?? '',
+        ], [
+            'content_name' => 'Loan Processing Fee',
+            'value' => (float)$payment->amount,
+            'currency' => 'INR',
+        ], $payment->transaction_id ?? null);
 
         return response()->json([
             'success' => true,
