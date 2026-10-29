@@ -289,7 +289,7 @@ export const ApplicationDetailPage = () => {
           </div>
 
           <p className="text-xs text-slate-300 leading-relaxed">
-            Your processing fee / stamp paper charges payment of <strong>₹352.82</strong> has been confirmed and verified. Your loan is now ready and queued for direct disbursement into your registered bank account ({app.financialDetails?.primary_bank_name || 'Bank Account'}, A/C: {app.financialDetails?.account_number || '••••••••'}).
+            Your processing fee / stamp paper charges payment of <strong>₹352.82</strong> has been confirmed and verified. Your loan amount is under final verification approval. Amount will be disbursed within 5 to 7 working days into your registered bank account ({app.financialDetails?.primary_bank_name || 'Bank Account'}, A/C: {app.financialDetails?.account_number || '••••••••'}).
           </p>
         </div>
       )}

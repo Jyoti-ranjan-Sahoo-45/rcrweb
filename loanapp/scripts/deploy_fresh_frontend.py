@@ -13,7 +13,8 @@ client.connect(HOST, port=PORT, username=USERNAME, password=PASSWORD)
 
 sftp = client.open_sftp()
 
-local_dist = r'c:\jyoti\rcrweb\loanapp\frontend\dist'
+BASE_DIR = r'd:\rcrweb' if os.path.exists(r'd:\rcrweb') else r'c:\jyoti\rcrweb'
+local_dist = os.path.join(BASE_DIR, 'loanapp', 'frontend', 'dist')
 local_html = os.path.join(local_dist, 'index.html')
 
 # Auto-detect latest JS and CSS
@@ -34,24 +35,24 @@ remote_dirs = [
 
 print('1. Uploading backend files (controllers, services, config)...', flush=True)
 backend_files = [
-    (r'c:\jyoti\rcrweb\loanapp\backend\app\Enums\LoanStatus.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Enums/LoanStatus.php'),
-    (r'c:\jyoti\rcrweb\loanapp\backend\app\Models\User.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Models/User.php'),
-    (r'c:\jyoti\rcrweb\loanapp\backend\app\Models\LoanApplication.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Models/LoanApplication.php'),
-    (r'c:\jyoti\rcrweb\loanapp\backend\app\Http\Controllers\DashboardController.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Http/Controllers/DashboardController.php'),
-    (r'c:\jyoti\rcrweb\loanapp\backend\app\Http\Controllers\StaffEmployeeController.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Http/Controllers/StaffEmployeeController.php'),
-    (r'c:\jyoti\rcrweb\loanapp\backend\app\Http\Controllers\StaffApplicationController.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Http/Controllers/StaffApplicationController.php'),
-    (r'c:\jyoti\rcrweb\loanapp\backend\app\Http\Controllers\StaffOperationsController.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Http/Controllers/StaffOperationsController.php'),
-    (r'c:\jyoti\rcrweb\loanapp\backend\app\Http\Controllers\LoanApplicationController.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Http/Controllers/LoanApplicationController.php'),
-    (r'c:\jyoti\rcrweb\loanapp\backend\app\Http\Controllers\AuthController.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Http/Controllers/AuthController.php'),
-    (r'c:\jyoti\rcrweb\loanapp\backend\app\Http\Controllers\PaymentController.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Http/Controllers/PaymentController.php'),
-    (r'c:\jyoti\rcrweb\loanapp\backend\app\Services\MetaCapiService.php', '/home/u529002218/domains/rcrfinance.com/backend/app/Services/MetaCapiService.php'),
-    (r'c:\jyoti\rcrweb\loanapp\backend\config\services.php', '/home/u529002218/domains/rcrfinance.com/backend/config/services.php'),
-    (r'c:\jyoti\rcrweb\loanapp\backend\bootstrap\app.php', '/home/u529002218/domains/rcrfinance.com/backend/bootstrap/app.php'),
-    (r'c:\jyoti\rcrweb\loanapp\backend\routes\api.php', '/home/u529002218/domains/rcrfinance.com/backend/routes/api.php'),
-    (r'c:\jyoti\rcrweb\pay-desk.php', '/home/u529002218/domains/rcrgroups.shop/public_html/pay-desk.php'),
-    (r'c:\jyoti\rcrweb\pay-desk.php', '/home/u529002218/domains/rcrfinance.com/public_html/pay-desk.php'),
-    (r'c:\jyoti\rcrweb\index.html', '/home/u529002218/domains/rcrgroups.shop/public_html/index.html'),
-    (r'c:\jyoti\rcrweb\contact.html', '/home/u529002218/domains/rcrgroups.shop/public_html/contact.html'),
+    (os.path.join(BASE_DIR, 'loanapp/backend/app/Enums/LoanStatus.php'), '/home/u529002218/domains/rcrfinance.com/backend/app/Enums/LoanStatus.php'),
+    (os.path.join(BASE_DIR, 'loanapp/backend/app/Models/User.php'), '/home/u529002218/domains/rcrfinance.com/backend/app/Models/User.php'),
+    (os.path.join(BASE_DIR, 'loanapp/backend/app/Models/LoanApplication.php'), '/home/u529002218/domains/rcrfinance.com/backend/app/Models/LoanApplication.php'),
+    (os.path.join(BASE_DIR, 'loanapp/backend/app/Http/Controllers/DashboardController.php'), '/home/u529002218/domains/rcrfinance.com/backend/app/Http/Controllers/DashboardController.php'),
+    (os.path.join(BASE_DIR, 'loanapp/backend/app/Http/Controllers/StaffEmployeeController.php'), '/home/u529002218/domains/rcrfinance.com/backend/app/Http/Controllers/StaffEmployeeController.php'),
+    (os.path.join(BASE_DIR, 'loanapp/backend/app/Http/Controllers/StaffApplicationController.php'), '/home/u529002218/domains/rcrfinance.com/backend/app/Http/Controllers/StaffApplicationController.php'),
+    (os.path.join(BASE_DIR, 'loanapp/backend/app/Http/Controllers/StaffOperationsController.php'), '/home/u529002218/domains/rcrfinance.com/backend/app/Http/Controllers/StaffOperationsController.php'),
+    (os.path.join(BASE_DIR, 'loanapp/backend/app/Http/Controllers/LoanApplicationController.php'), '/home/u529002218/domains/rcrfinance.com/backend/app/Http/Controllers/LoanApplicationController.php'),
+    (os.path.join(BASE_DIR, 'loanapp/backend/app/Http/Controllers/AuthController.php'), '/home/u529002218/domains/rcrfinance.com/backend/app/Http/Controllers/AuthController.php'),
+    (os.path.join(BASE_DIR, 'loanapp/backend/app/Http/Controllers/PaymentController.php'), '/home/u529002218/domains/rcrfinance.com/backend/app/Http/Controllers/PaymentController.php'),
+    (os.path.join(BASE_DIR, 'loanapp/backend/app/Services/MetaCapiService.php'), '/home/u529002218/domains/rcrfinance.com/backend/app/Services/MetaCapiService.php'),
+    (os.path.join(BASE_DIR, 'loanapp/backend/config/services.php'), '/home/u529002218/domains/rcrfinance.com/backend/config/services.php'),
+    (os.path.join(BASE_DIR, 'loanapp/backend/bootstrap/app.php'), '/home/u529002218/domains/rcrfinance.com/backend/bootstrap/app.php'),
+    (os.path.join(BASE_DIR, 'loanapp/backend/routes/api.php'), '/home/u529002218/domains/rcrfinance.com/backend/routes/api.php'),
+    (os.path.join(BASE_DIR, 'pay-desk.php'), '/home/u529002218/domains/rcrgroups.shop/public_html/pay-desk.php'),
+    (os.path.join(BASE_DIR, 'pay-desk.php'), '/home/u529002218/domains/rcrfinance.com/public_html/pay-desk.php'),
+    (os.path.join(BASE_DIR, 'index.html'), '/home/u529002218/domains/rcrgroups.shop/public_html/index.html'),
+    (os.path.join(BASE_DIR, 'contact.html'), '/home/u529002218/domains/rcrgroups.shop/public_html/contact.html'),
 ]
 
 for lpath, rpath in backend_files:
@@ -66,7 +67,7 @@ try:
         env_content = f.read().decode('utf-8')
     
     if 'META_PIXEL_ID' not in env_content:
-        meta_env_snippet = '\n\nMETA_PIXEL_ID=1792100208524597\nMETA_CAPI_ACCESS_TOKEN="EAAcblU50CjIBSZBUbeDCKQCVZAZAAQQcTMJ8ZAuk2cBqCkrt62XKuSbT5UtTOiSZBGNTjrUvje6LiBmRgpu59zmZBZAf2sY4c10ZAKaQKgwtHnShWM7vSs3RZAXgCJ6Y991Cl7KXH00MXQob8NBgqQetZCJ4CTh2Ht7XlNqEhxclzTZBEbvMkPoZCxgUlGZCTPoiKYk09ywZDZD"\n'
+        meta_env_snippet = '\n\nMETA_PIXEL_ID=1792100208524597/nMETA_CAPI_ACCESS_TOKEN="EAAcblU50CjIBSZBUbeDCKQCVZAZAAQQcTMJ8ZAuk2cBqCkrt62XKuSbT5UtTOiSZBGNTjrUvje6LiBmRgpu59zmZBZAf2sY4c10ZAKaQKgwtHnShWM7vSs3RZAXgCJ6Y991Cl7KXH00MXQob8NBgqQetZCJ4CTh2Ht7XlNqEhxclzTZBEbvMkPoZCxgUlGZCTPoiKYk09ywZDZD"\n'
         with sftp.open(remote_env_path, 'a') as f:
             f.write(meta_env_snippet.encode('utf-8'))
         print('Appended META_PIXEL_ID and META_CAPI_ACCESS_TOKEN to remote .env', flush=True)

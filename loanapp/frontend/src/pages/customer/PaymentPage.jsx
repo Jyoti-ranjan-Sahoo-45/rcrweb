@@ -87,9 +87,9 @@ export const PaymentPage = () => {
           <div className="p-3 bg-amber-50 rounded-2xl border border-amber-200 text-amber-900 text-left flex gap-2.5 items-start">
             <Clock size={16} className="text-amber-600 shrink-0 mt-0.5" />
             <div className="text-xs space-y-0.5">
-              <span className="font-bold block">Status: Disbursal Queue (15 - 30 Mins)</span>
+              <span className="font-bold block">Status: Your Loan Amount Final Approval After Verification</span>
               <span className="text-[11px] text-amber-800">
-                Bank clearing protocol is initiating transfer of ₹{finalDisbAmt.toLocaleString('en-IN')} to your verified bank account.
+                Amount of ₹{finalDisbAmt.toLocaleString('en-IN')} will be disbursed in 5 to 7 working days to your verified bank account.
               </span>
             </div>
           </div>
