@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { BrandLogo } from '../../components/BrandLogo';
-import { ShieldCheck, PhoneCall, Mail, Building, Clock, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Mail, Building, Clock, ArrowLeft, CheckCircle2 } from 'lucide-react';
 
 export const GrievancePage = () => {
   return (

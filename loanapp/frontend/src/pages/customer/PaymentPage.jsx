@@ -269,7 +269,7 @@ export const PaymentPage = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-100">
-              <PhoneCall size={18} />
+              <Mail size={18} />
             </div>
             <div>
               <h4 className="text-xs font-black text-slate-900 leading-tight">Need Help with Payment?</h4>
