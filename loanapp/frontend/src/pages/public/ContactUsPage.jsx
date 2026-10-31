@@ -349,6 +349,21 @@ export const ContactUsPage = () => {
           </div>
         </div>
       </main>
+
+      {/* Bottom Footer Attribution */}
+      <footer className="mt-20 pt-8 border-t border-slate-800/80 text-center text-xs text-slate-500">
+        <p>
+          &copy; {new Date().getFullYear()} RCR Finance. All Rights Reserved. • Developed by{' '}
+          <a
+            href="https://serviceexhibition.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-slate-400 hover:text-white underline font-medium transition"
+          >
+            Service Exhibition
+          </a>
+        </p>
+      </footer>
     </div>
   );
 };

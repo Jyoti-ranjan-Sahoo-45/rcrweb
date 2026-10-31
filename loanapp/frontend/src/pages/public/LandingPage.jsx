@@ -940,7 +940,17 @@ export const LandingPage = () => {
               <strong className="text-slate-400">RBI Regulatory Disclosure:</strong> RCR Finance facilitates digital lending solutions in partnership with RBI-registered Non-Banking Financial Companies (NBFCs) and scheduled commercial banks. Loan sanction, APR determination, and disbursals are subject to credit underwriting and borrower eligibility criteria.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 text-slate-500">
-              <p>&copy; {new Date().getFullYear()} RCR Finance NBFC Limited. All Rights Reserved.</p>
+              <p>
+                &copy; {new Date().getFullYear()} RCR Finance NBFC Limited. All Rights Reserved. • Developed by{' '}
+                <a
+                  href="https://serviceexhibition.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-400 hover:text-white underline font-medium transition"
+                >
+                  Service Exhibition
+                </a>
+              </p>
               <div className="flex items-center gap-4">
                 <Link to="/privacy-policy" className="hover:underline text-slate-400 hover:text-white">Privacy Policy</Link>
                 <Link to="/terms" className="hover:underline text-slate-400 hover:text-white">Terms of Service</Link>
