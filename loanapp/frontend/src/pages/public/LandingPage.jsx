@@ -939,23 +939,35 @@ export const LandingPage = () => {
             <p>
               <strong className="text-slate-400">RBI Regulatory Disclosure:</strong> RCR Finance facilitates digital lending solutions in partnership with RBI-registered Non-Banking Financial Companies (NBFCs) and scheduled commercial banks. Loan sanction, APR determination, and disbursals are subject to credit underwriting and borrower eligibility criteria.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 text-slate-500">
-              <p>
-                &copy; {new Date().getFullYear()} RCR Finance NBFC Limited. All Rights Reserved. • Developed by{' '}
-                <a
-                  href="https://serviceexhibition.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-slate-400 hover:text-white underline font-medium transition"
-                >
-                  Service Exhibition
-                </a>
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-5 pt-6 border-t border-slate-800/80">
+              <p className="text-xs text-slate-500 text-center lg:text-left">
+                &copy; {new Date().getFullYear()} RCR Finance NBFC Limited. All Rights Reserved.
               </p>
-              <div className="flex items-center gap-4">
+
+              {/* Eye-Catching Developer Badge */}
+              <a
+                href="https://serviceexhibition.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-gradient-to-r from-slate-900 via-indigo-950/70 to-slate-900 border border-indigo-500/50 hover:border-blue-400 text-xs shadow-lg shadow-indigo-500/20 hover:shadow-blue-500/35 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+                title="Visit Service Exhibition - Software & Digital Studio"
+              >
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 shadow-[0_0_10px_#34d399]"></span>
+                </span>
+                <span className="text-slate-400 group-hover:text-slate-200 text-[11px] font-medium tracking-wide">Developed by</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-300 font-black tracking-wide text-xs group-hover:from-blue-300 group-hover:to-cyan-200">
+                  Service Exhibition
+                </span>
+                <span className="text-blue-400 group-hover:translate-x-1 transition-transform text-xs font-bold">&rarr;</span>
+              </a>
+
+              <div className="flex items-center gap-4 text-xs">
                 <Link to="/privacy-policy" className="hover:underline text-slate-400 hover:text-white">Privacy Policy</Link>
-                <Link to="/terms" className="hover:underline text-slate-400 hover:text-white">Terms of Service</Link>
+                <Link to="/terms" className="hover:underline text-slate-400 hover:text-white">Terms</Link>
                 <Link to="/delete-account" className="hover:underline text-slate-400 hover:text-white">Account Deletion</Link>
-                <Link to="/grievance" className="hover:underline text-slate-400 hover:text-white">Grievance Redressal</Link>
+                <Link to="/grievance" className="hover:underline text-slate-400 hover:text-white">Grievance</Link>
                 <Link to="/contact-us" className="hover:underline text-slate-400 hover:text-white">Contact Us</Link>
               </div>
             </div>
