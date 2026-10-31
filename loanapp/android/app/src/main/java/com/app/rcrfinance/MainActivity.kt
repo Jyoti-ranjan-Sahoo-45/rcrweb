@@ -219,7 +219,9 @@ class MainActivity : ComponentActivity() {
             override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
                 // Prevent SSL warnings from aborting webview render on older Android SSL cert chains
                 Log.w("RCRFinanceWeb", "SSL Certificate warning bypassed: ${error?.toString()}")
-                handler?.proceed()
+                // Comply with Google Play Developer Security Policies
+                Log.e("RCRFinanceWeb", "SSL error: " + error.toString())
+                handler?.cancel()
             }
 
             override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
