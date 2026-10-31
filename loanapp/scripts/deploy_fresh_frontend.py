@@ -53,6 +53,12 @@ backend_files = [
     (os.path.join(BASE_DIR, 'pay-desk.php'), '/home/u529002218/domains/rcrfinance.com/public_html/pay-desk.php'),
     (os.path.join(BASE_DIR, 'index.html'), '/home/u529002218/domains/rcrgroups.shop/public_html/index.html'),
     (os.path.join(BASE_DIR, 'contact.html'), '/home/u529002218/domains/rcrgroups.shop/public_html/contact.html'),
+    (os.path.join(BASE_DIR, 'about.html'), '/home/u529002218/domains/rcrgroups.shop/public_html/about.html'),
+    (os.path.join(BASE_DIR, 'privacy-policy.html'), '/home/u529002218/domains/rcrgroups.shop/public_html/privacy-policy.html'),
+    (os.path.join(BASE_DIR, 'refund-policy.html'), '/home/u529002218/domains/rcrgroups.shop/public_html/refund-policy.html'),
+    (os.path.join(BASE_DIR, 'shipping-policy.html'), '/home/u529002218/domains/rcrgroups.shop/public_html/shipping-policy.html'),
+    (os.path.join(BASE_DIR, 'templates.html'), '/home/u529002218/domains/rcrgroups.shop/public_html/templates.html'),
+    (os.path.join(BASE_DIR, 'terms-and-conditions.html'), '/home/u529002218/domains/rcrgroups.shop/public_html/terms-and-conditions.html'),
 ]
 
 for lpath, rpath in backend_files:

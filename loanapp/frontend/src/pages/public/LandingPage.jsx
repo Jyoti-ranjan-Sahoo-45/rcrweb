@@ -923,11 +923,10 @@ export const LandingPage = () => {
 
             {/* Support & Grievance */}
             <div className="space-y-3">
-              <h4 className="font-bold text-white uppercase text-[11px] tracking-wider">Grievance & Help</h4>
+              <h4 className="font-bold text-white uppercase text-[11px] tracking-wider">Support & Helpdesk</h4>
               <ul className="space-y-2 text-[11px]">
-                <li>Email: <a href="mailto:support@rcrfinance.in" className="text-blue-400">support@rcrfinance.in</a></li>
-                <li>Helpline: <a href="tel:9588746801" className="text-emerald-400 font-bold hover:underline">+91 9588746801</a></li>
-                <li>WhatsApp: <a href="https://wa.me/919588746801?text=Hello%20RCR%20Finance%2C%20I%20have%20an%20inquiry." target="_blank" rel="noopener noreferrer" className="text-[#25D366] font-bold hover:underline">+91 9588746801</a></li>
+                <li>Support Email: <a href="mailto:rcrcontactteam@gmail.com" className="text-blue-400 font-mono hover:underline">rcrcontactteam@gmail.com</a></li>
+                <li>Helpdesk: <Link to="/contact-us" className="text-emerald-400 font-bold hover:underline">Raise Support Ticket &rarr;</Link></li>
                 <li>Hours: Mon - Sat (9:00 AM - 7:00 PM)</li>
                 <li>Grievance Officer: N. Ramanathan</li>
               </ul>
@@ -955,7 +954,7 @@ export const LandingPage = () => {
         </div>
       </footer>
 
-      {/* Modern High-Converting Floating Action Widget (Apply Now + WhatsApp) */}
+      {/* Floating Action Widget */}
       <FloatingActionWidget />
     </div>
   );

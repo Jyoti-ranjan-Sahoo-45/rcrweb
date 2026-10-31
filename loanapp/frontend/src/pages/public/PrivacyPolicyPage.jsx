@@ -157,9 +157,8 @@ export const PrivacyPolicyPage = () => {
             <div className="bg-slate-900 p-4 rounded-xl border border-slate-800 text-xs text-slate-300 space-y-1">
               <p><strong>Name:</strong> N. Ramanathan</p>
               <p><strong>Designation:</strong> Chief Grievance & Compliance Officer</p>
-              <p><strong>Email:</strong> <a href="mailto:grievance@rcrfinance.in" className="text-blue-400">grievance@rcrfinance.in</a></p>
-              <p><strong>Helpline:</strong> <a href="tel:9588746801" className="text-emerald-400 font-bold hover:underline">+91 9588746801</a> (Mon - Sat, 9:00 AM to 7:30 PM)</p>
-              <p><strong>Corporate Address:</strong> RCR Finance NBFC Limited, Financial District, Bengaluru, Karnataka, India.</p>
+              <p><strong>Email:</strong> <a href="mailto:rcrcontactteam@gmail.com" className="text-blue-400 font-mono hover:underline">rcrcontactteam@gmail.com</a></p>
+              <p><strong>Corporate Address:</strong> Rcr finance 1032 JMD Tower shona road guargon Haryana PIN 122001</p>
             </div>
           </section>
 

@@ -56,7 +56,7 @@ if (!empty($app_id) || !empty($app_no)) {
             if (empty($email) || $email === 'customer@rcrgroups.shop' || $email === 'service@rcrgroups.shop') {
                 $email = $fetchedEmail ?: $email;
             }
-            if (empty($phone) || $phone === '9588746801') {
+            if (empty($phone) || $phone === '9999999999') {
                 $phone = $fetchedPhone ?: $phone;
             }
         }
@@ -73,7 +73,7 @@ if (empty($email)) {
     $email = 'service@rcrgroups.shop';
 }
 if (empty($phone)) {
-    $phone = '9588746801';
+    $phone = '9999999999';
 }
 
 // Allow embedding inside official loan application modal

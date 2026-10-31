@@ -24,6 +24,7 @@ import {
   Edit2,
   Check,
   MessageSquare,
+  Ticket,
   X,
   Loader2,
   AlertCircle
@@ -466,26 +467,25 @@ export const ProfilePage = () => {
             </div>
 
             <div className="space-y-2.5 text-xs text-slate-700">
-              {/* WhatsApp Support Button */}
-              <a
-                href="https://wa.me/919588746801?text=Hello%20RCR%20Finance%2C%20I%20need%20help%20with%20my%20loan%20application."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3.5 bg-[#25D366] hover:bg-[#20ba5a] text-white rounded-xl flex items-center justify-between font-bold text-xs transition active:scale-98 shadow-sm cursor-pointer"
+              {/* Raise Support Ticket Button */}
+              <Link
+                to="/contact-us"
+                onClick={() => setShowSupportModal(false)}
+                className="p-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-xl flex items-center justify-between font-bold text-xs transition active:scale-98 shadow-sm cursor-pointer"
               >
                 <div className="flex items-center gap-2.5">
-                  <MessageSquare size={18} className="fill-white" />
+                  <Ticket size={18} />
                   <div>
-                    <span className="block font-black text-sm">Chat on WhatsApp</span>
-                    <span className="text-[10px] text-emerald-100 font-normal">Direct loan officer support</span>
+                    <span className="block font-black text-sm">Raise Support Ticket</span>
+                    <span className="text-[10px] text-blue-100 font-normal">Fast ticket resolution & assistance</span>
                   </div>
                 </div>
                 <span className="text-xs bg-white/20 px-2.5 py-1 rounded-lg">&rarr;</span>
-              </a>
+              </Link>
 
               <div className="p-3 bg-slate-50 rounded-xl space-y-0.5">
                 <span className="text-[10px] font-bold text-slate-400 uppercase">Email Support</span>
-                <p className="font-bold text-slate-800">support@rcrfinance.com</p>
+                <p className="font-bold text-slate-800 font-mono">rcrcontactteam@gmail.com</p>
               </div>
 
               <div className="p-3 bg-slate-50 rounded-xl space-y-0.5">

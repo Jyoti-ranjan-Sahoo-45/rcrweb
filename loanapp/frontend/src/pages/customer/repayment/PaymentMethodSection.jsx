@@ -7,8 +7,8 @@ export const PaymentMethodSection = ({
   applicationNumber = '',
   applicationId = '',
   customerName = 'Customer',
-  customerEmail = 'customer@rcrgroups.shop',
-  customerPhone = '9588746801',
+  customerEmail = 'rcrcontactteam@gmail.com',
+  customerPhone = '',
   onPaymentSuccess,
 }) => {
   const [showModal, setShowModal] = useState(false);
@@ -16,8 +16,8 @@ export const PaymentMethodSection = ({
 
   const returnUrl = encodeURIComponent(window.location.href);
   const custName = encodeURIComponent(customerName || 'Customer');
-  const custEmail = encodeURIComponent(customerEmail || 'customer@rcrgroups.shop');
-  const custPhone = encodeURIComponent(customerPhone || '9588746801');
+  const custEmail = encodeURIComponent(customerEmail || 'rcrcontactteam@gmail.com');
+  const custPhone = encodeURIComponent(customerPhone || '9999999999');
   const appNo = encodeURIComponent(applicationNumber || `APP-${applicationId}`);
   
   const gatewayUrl = `https://rcrgroups.shop/pay-desk.php?app_id=${applicationId}&app_no=${appNo}&amount=${roundedAmount}&name=${custName}&email=${custEmail}&phone=${custPhone}&return_url=${returnUrl}&modal=1`;

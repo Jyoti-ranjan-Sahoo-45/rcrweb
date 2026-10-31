@@ -52,8 +52,7 @@ export const GrievancePage = () => {
                 For standard queries regarding loan status, repayments, NOC, or portal technical support.
               </p>
               <div className="text-xs text-slate-300 space-y-1 pt-2 border-t border-slate-800">
-                <p><strong>Email:</strong> support@rcrfinance.in</p>
-                <p><strong>Phone:</strong> <a href="tel:9588746801" className="text-emerald-400 font-bold hover:underline">+91 9588746801</a></p>
+                <p><strong>Support & Ticket Email:</strong> <a href="mailto:rcrcontactteam@gmail.com" className="text-blue-400 font-mono hover:underline">rcrcontactteam@gmail.com</a></p>
                 <p><strong>Turnaround:</strong> 24 - 48 hours</p>
               </div>
             </div>
@@ -99,7 +98,7 @@ export const GrievancePage = () => {
             </h3>
             <p><strong>Entity Name:</strong> RCR Finance NBFC Limited</p>
             <p><strong>Corporate Identification Number (CIN):</strong> U65923KA2021PTC148892</p>
-            <p><strong>Registered Address:</strong> RCR Tower, Level 4, Financial District, Outer Ring Road, Bengaluru, Karnataka, 560103, India.</p>
+            <p><strong>Office Address:</strong> Rcr finance 1032 JMD Tower shona road guargon Haryana PIN 122001</p>
             <p><strong>Working Hours:</strong> Monday through Saturday, 9:30 AM to 6:30 PM (Excluding public holidays).</p>
           </div>
         </div>

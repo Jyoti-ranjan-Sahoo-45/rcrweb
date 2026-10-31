@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../services/api';
 import confetti from 'canvas-confetti';
-import { ArrowLeft, ShieldCheck, CheckCircle2, Lock, Clock, Sparkles, PhoneCall, Phone, MessageSquare } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, CheckCircle2, Lock, Clock, Sparkles, Mail, Ticket } from 'lucide-react';
 import { PaymentModal } from '../../components/PaymentModal';
 
 export const PaymentPage = () => {
@@ -118,7 +118,7 @@ export const PaymentPage = () => {
     user?.email ||
     app?.user?.email ||
     app?.personalDetails?.email ||
-    'service@rcrgroups.shop'
+    'rcrcontactteam@gmail.com'
   );
 
   const realPhone = (
@@ -282,17 +282,15 @@ export const PaymentPage = () => {
         </div>
 
         <p className="text-[11px] text-slate-600 leading-relaxed">
-          If you have any difficulty completing payment or have questions regarding stamping, reach out directly on WhatsApp:
+          If you have any difficulty completing payment or have questions regarding stamping, contact our support desk:
         </p>
 
         <a
-          href="https://wa.me/919588746801?text=Hello%20RCR%20Finance%2C%20I%20need%20help%20with%20my%20loan%20stamping%20fee%20payment."
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full py-3.5 px-4 bg-[#25D366] hover:bg-[#20ba5a] text-white rounded-2xl text-center text-xs font-black transition flex items-center justify-center gap-2 shadow-md shadow-emerald-500/25 active:scale-95 cursor-pointer"
+          href="mailto:rcrcontactteam@gmail.com?subject=Payment%20Assistance%20for%20Loan"
+          className="w-full py-3.5 px-4 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl text-center text-xs font-bold transition flex items-center justify-center gap-2 shadow-md active:scale-95 cursor-pointer"
         >
-          <MessageSquare size={16} className="fill-white" />
-          <span>Chat on WhatsApp</span>
+          <Mail size={16} />
+          <span>Email Support Desk (rcrcontactteam@gmail.com)</span>
         </a>
       </div>
 
