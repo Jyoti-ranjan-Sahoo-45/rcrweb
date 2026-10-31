@@ -82,16 +82,20 @@ try:
 except Exception as e:
     print(f'Warning reading/updating remote .env: {e}', flush=True)
 
-print('2. Uploading new assets to remote targets...', flush=True)
+print('2. Uploading all dist assets to remote targets...', flush=True)
+local_assets_dir = os.path.join(local_dist, 'assets')
+all_asset_files = os.listdir(local_assets_dir)
+
 for rdir in remote_dirs:
     sftp.put(local_html, f'{rdir}/index.html')
     print(f'Uploaded index.html -> {rdir}/index.html', flush=True)
     
-    # Upload only the new JS bundle and CSS bundle
-    sftp.put(local_js, f'{rdir}/assets/{current_js}')
-    print(f'Uploaded JS -> {rdir}/assets/{current_js}', flush=True)
-    sftp.put(local_css, f'{rdir}/assets/{current_css}')
-    print(f'Uploaded CSS -> {rdir}/assets/{current_css}', flush=True)
+    # Upload all assets (JS, CSS, images, mockups, etc.)
+    for asset_file in all_asset_files:
+        src_path = os.path.join(local_assets_dir, asset_file)
+        dest_path = f'{rdir}/assets/{asset_file}'
+        sftp.put(src_path, dest_path)
+        print(f'Uploaded asset: {asset_file} -> {dest_path}', flush=True)
 
 sftp.close()
 print('SFTP closed successfully.', flush=True)
